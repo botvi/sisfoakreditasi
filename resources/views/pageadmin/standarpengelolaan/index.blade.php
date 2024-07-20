@@ -12,8 +12,21 @@
 
         <div class="row">
             @foreach($standarPengelolaan as $standarPengelolaan)
-                <div class="col-md-3 mb-3">
-                    <div class="card h-100 bg-dark text-light">
+            @php
+            $bgColor = '#343a40'; // Default dark background
+            $fileExtension = pathinfo($standarPengelolaan->file_path, PATHINFO_EXTENSION);
+
+            if ($fileExtension === 'pdf') {
+                $bgColor = '#dc3545'; // Red for PDF
+            } elseif ($fileExtension === 'docx') {
+                $bgColor = '#007bff'; // Blue for DOCX
+            } elseif ($fileExtension === 'xlsx') {
+                $bgColor = '#28a745'; // Green for XLSX
+            }
+        @endphp
+
+        <div class="col-md-3 mb-3">
+            <div class="card h-100" style="background-color: {{ $bgColor }}; color: #fff;">
                         <div class="card-body d-flex flex-column align-items-center">
                             <div class="box-icon mb-3">
                                 <i class='bx bxs-file-doc' style="font-size: 50px;"></i>

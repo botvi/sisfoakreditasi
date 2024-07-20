@@ -11,7 +11,15 @@ class StandarSaranaDanPraController extends Controller
 {
     public function index()
     {
-        $StandarSaranaDanPra = StandarSaranaDanPra::with('user')->get();
+        $user = Auth::user();
+    
+        if ($user->role == 'guru') {
+            // Untuk role 'guru', hanya menampilkan data yang ditambahkan oleh guru tersebut
+            $StandarSaranaDanPra = StandarSaranaDanPra::where('user_id', $user->id)->get();
+        } else {
+            // Untuk role 'kepalasekolah' dan 'admin', menampilkan semua data
+            $StandarSaranaDanPra = StandarSaranaDanPra::all();
+        }
         return view('pageadmin.standarsaranadanpra.index', compact('StandarSaranaDanPra'));
     }
     

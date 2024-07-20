@@ -11,7 +11,15 @@ class StandarPembiayaanController extends Controller
 {
     public function index()
     {
-        $standarPembiyaan = StandarPembiayaan::with('user')->get();
+        $user = Auth::user();
+    
+        if ($user->role == 'guru') {
+            // Untuk role 'guru', hanya menampilkan data yang ditambahkan oleh guru tersebut
+            $standarPembiyaan = StandarPembiayaan::where('user_id', $user->id)->get();
+        } else {
+            // Untuk role 'kepalasekolah' dan 'admin', menampilkan semua data
+            $standarPembiyaan = StandarPembiayaan::all();
+        }
         return view('pageadmin.standarpembiayaan.index', compact('standarPembiyaan'));
     }
     

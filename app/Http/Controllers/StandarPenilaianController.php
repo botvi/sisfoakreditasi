@@ -11,7 +11,15 @@ class StandarPenilaianController extends Controller
 {
     public function index()
     {
-        $StandarPenilaian = StandarPenilaian::with('user')->get();
+        $user = Auth::user();
+    
+        if ($user->role == 'guru') {
+            // Untuk role 'guru', hanya menampilkan data yang ditambahkan oleh guru tersebut
+            $StandarPenilaian = StandarPenilaian::where('user_id', $user->id)->get();
+        } else {
+            // Untuk role 'kepalasekolah' dan 'admin', menampilkan semua data
+            $StandarPenilaian = StandarPenilaian::all();
+        }
         return view('pageadmin.standarpenilaian.index', compact('StandarPenilaian'));
     }
     

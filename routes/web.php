@@ -15,6 +15,7 @@ use App\Http\Controllers\{
     StandarPenilaianController,
     StandarProsesController,
     StandarSaranaDanPraController,
+    LaporanController
 };
 
 /*
@@ -110,5 +111,5 @@ Route::get('/standar-sarana/{id}/edit', [StandarSaranaDanPraController::class, '
 Route::put('/standar-sarana/{id}', [StandarSaranaDanPraController::class, 'update']);
 Route::delete('/standar-sarana/{id}', [StandarSaranaDanPraController::class, 'destroy']);
 
-
+Route::get('/laporan', [LaporanController::class, 'index']);
 });

@@ -11,7 +11,15 @@ class StandarProsesController extends Controller
 {
     public function index()
     {
-        $StandarProses = StandarProses::with('user')->get();
+        $user = Auth::user();
+    
+        if ($user->role == 'guru') {
+            // Untuk role 'guru', hanya menampilkan data yang ditambahkan oleh guru tersebut
+            $StandarProses = StandarProses::where('user_id', $user->id)->get();
+        } else {
+            // Untuk role 'kepalasekolah' dan 'admin', menampilkan semua data
+            $StandarProses = StandarProses::all();
+        }
         return view('pageadmin.standarproses.index', compact('StandarProses'));
     }
     

@@ -11,7 +11,15 @@ class StandarPendidikDanTenpenController extends Controller
 {
     public function index()
     {
-        $standarPendidikan = StandarPendidikDanTenpen::with('user')->get();
+        $user = Auth::user();
+    
+        if ($user->role == 'guru') {
+            // Untuk role 'guru', hanya menampilkan data yang ditambahkan oleh guru tersebut
+            $standarPendidikan = StandarPendidikDanTenpen::where('user_id', $user->id)->get();
+        } else {
+            // Untuk role 'kepalasekolah' dan 'admin', menampilkan semua data
+            $standarPendidikan = StandarPendidikDanTenpen::all();
+        }
         return view('pageadmin.standarpendidikdantenpen.index', compact('standarPendidikan'));
     }
     

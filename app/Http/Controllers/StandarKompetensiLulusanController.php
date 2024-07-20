@@ -11,7 +11,15 @@ class StandarKompetensiLulusanController extends Controller
 {
     public function index()
     {
-        $standarKompetensi = StandarKompetensiLulusan::with('user')->get();
+        $user = Auth::user();
+    
+        if ($user->role == 'guru') {
+            // Untuk role 'guru', hanya menampilkan data yang ditambahkan oleh guru tersebut
+            $standarKompetensi = StandarKompetensiLulusan::where('user_id', $user->id)->get();
+        } else {
+            // Untuk role 'kepalasekolah' dan 'admin', menampilkan semua data
+            $standarKompetensi = StandarKompetensiLulusan::all();
+        }
         return view('pageadmin.standarkompetensilulusan.index', compact('standarKompetensi'));
     }
     
