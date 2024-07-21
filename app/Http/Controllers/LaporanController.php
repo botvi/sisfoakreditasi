@@ -12,6 +12,8 @@ use App\Models\StandarProses;
 use App\Models\StandarSaranaDanPra;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class LaporanController extends Controller
 {
@@ -53,5 +55,33 @@ class LaporanController extends Controller
         $users = User::all();
 
         return view('pageadmin.laporan.index', compact('reports', 'users', 'user_id', 'model_name', 'models'));
+    }
+
+    public function userReports()
+    {
+        $user = Auth::user();
+        $models = [
+            'StandarIsi' => StandarIsi::class,
+            'StandarKompetensiLulusan' => StandarKompetensiLulusan::class,
+            'StandarPembiayaan' => StandarPembiayaan::class,
+            'StandarPendidikDanTenpen' => StandarPendidikDanTenpen::class,
+            'StandarPengelolaan' => StandarPengelolaan::class,
+            'StandarPenilaian' => StandarPenilaian::class,
+            'StandarProses' => StandarProses::class,
+            'StandarSaranaDanPra' => StandarSaranaDanPra::class
+        ];
+
+        $reports = collect();
+
+        foreach ($models as $model) {
+            $query = $model::query();
+            if ($user->role == 'guru') {
+                $query->where('user_id', $user->id);
+            }
+            $data = $query->with('user')->get();
+            $reports = $reports->concat($data);
+        }
+
+        return view('pageadmin.laporan.user_reports', compact('reports'));
     }
 }

@@ -94,6 +94,19 @@
         </li>
         @endif
 
+        @if(Auth::user()->role == 'guru')
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">LAPORAN</span>
+        </li>
+        <li class="menu-item {{ Request::is('laporan/user-reports') ? 'active' : '' }}">
+            <a href="/laporan/user-reports" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-folder-open"></i>
+                <div data-i18n="Analytics">Laporan Saya</div>
+            </a>
+        </li>
+        @endif
+
+
         @if(Auth::user()->role == 'kepalasekolah' || Auth::user()->role == 'admin')
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">LAPORAN</span>

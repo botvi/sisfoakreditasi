@@ -112,4 +112,5 @@ Route::put('/standar-sarana/{id}', [StandarSaranaDanPraController::class, 'updat
 Route::delete('/standar-sarana/{id}', [StandarSaranaDanPraController::class, 'destroy']);
 
 Route::get('/laporan', [LaporanController::class, 'index']);
+Route::get('/laporan/user-reports', [LaporanController::class, 'userReports'])->name('laporan.userReports');
 });
