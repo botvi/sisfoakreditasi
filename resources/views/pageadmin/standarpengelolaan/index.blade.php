@@ -35,6 +35,8 @@
                                 <p class="card-text"><small class="text-muted">Pengupload: {{ $standarPengelolaan->user->nama }}</small></p>
                                 <h5 class="card-title text-light">{{ $standarPengelolaan->judul }}</h5>
                                 <p class="card-text">{{ $standarPengelolaan->deskripsi }}</p>
+                                <h6 class="card-text text-white">Waktu Upload: {{ \Carbon\Carbon::parse($standarPengelolaan->created_at)->format('d F Y') }}</h6>
+
                             </div>
                             <div class="d-flex justify-content-center mt-3">
                                 @if($standarPengelolaan->file_path)
